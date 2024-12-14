@@ -10,6 +10,14 @@ public class DoNTimes {
      */
     public static void doNTimes(Runnable func, int n) {
 
+          int i;
+        if (n < 0) {//if n is negitive so return
+            return;
+        }
+          for(i=0;i<n;i++)
+          {
+              func.run();
+          }
     }
 
     public static void main(String[] args) {
