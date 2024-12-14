@@ -1,6 +1,6 @@
 package katas.exercises;
 
-public class LongestCommonPrefix {
+public class   LongestCommonPrefix {
 
     /**
      * Finds the longest common prefix in an array of strings.
@@ -9,7 +9,40 @@ public class LongestCommonPrefix {
      * @return the longest common prefix, or an empty string if none exists
      */
     public static String longestCommonPrefix(String[] strs) {
-        return "";
+        int shortestString=strs[0].length(),i,j;
+        char letter;
+        String prefix="";
+        if(strs.length==0 || strs==null)
+        {
+            return "";
+        }
+        for(String element:strs)
+        {
+            if(element.length()<shortestString)
+            {
+                shortestString=element.length();
+            }
+        }
+        for(i=0;i<shortestString;i++)
+        {
+
+            letter= strs[0].charAt(i);
+
+            for(j=0;j<strs.length;j++)
+            {
+               if(strs[j].charAt(i)!=letter)
+               {
+                  return prefix;
+               }
+            }
+
+                prefix+=letter;
+
+
+        }
+
+
+        return prefix;
     }
 
     public static void main(String[] args) {
