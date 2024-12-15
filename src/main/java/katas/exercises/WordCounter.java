@@ -17,7 +17,7 @@ public class WordCounter {
         {
             return 0;
         }
-        words=sentence.split("\\s+");
+        words=sentence.trim().split("\\s+");
         counterWords=words.length;
 
         return counterWords;
