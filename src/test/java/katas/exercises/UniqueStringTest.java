@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class isUniqueTest {
+public class UniqueStringTest {
     @Test
     public void testisUniqueT(){
         //test 1

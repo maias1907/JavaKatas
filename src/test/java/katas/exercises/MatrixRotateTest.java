@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class rotateMatrixTest {
+public class MatrixRotateTest {
     @Test
     public void testrotateMatrix(){
         // Test 1  Basic 3x3 matrix
