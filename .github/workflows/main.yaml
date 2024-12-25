@@ -53,7 +53,7 @@ jobs:
       - name: Run Unit Tests
         run: |
           echo "Testing file: ${{ matrix.kata_name }}"
-          mvn -q -Dtest=${{ matrix.kata_name }}Test.java test
+          mvn -q -Dtest=${{ matrix.kata_name }}Test* test
 
   PostTestStoreTestId:
     needs: Test
