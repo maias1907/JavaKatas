@@ -11,19 +11,12 @@ public class StockTrader2 {
      * @return the maximum profit, or 0 if no profit can be achieved
      */
     public static int maxProfit(int[] prices) {
-        int i=1,sell,buy=prices[0],profit=0;
-        while(i<prices.length)
-        {
-            if(prices[i]>prices[i-1])
-            {
-                buy=i-1;
-                sell=i;
-                profit+=prices[i]-prices[i-1];
-
-
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            // If today's price is higher than yesterday's, buy yesterday and sell today
+            if (prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
             }
-            i++;
-
         }
         return profit;
     }
