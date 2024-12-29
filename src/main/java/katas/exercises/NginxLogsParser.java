@@ -33,8 +33,29 @@ public class NginxLogsParser {
      */
     public static Map<String, String> parseLog(String log) {
         Map<String, String> parsedData = new HashMap<>();
+        // Define the regex pattern
+        String logPattern = "^(\\S+) \\S+ \\S+ \\[([^\\]]+)] \"(\\S+) ([^\"]+) HTTP/([\\d.]+)\" (\\d{3}) (\\S+) \"[^\"]*\" \"([^\"]+)\"";
+        Pattern pattern = Pattern.compile(logPattern);
+        Matcher matcher = pattern.matcher(log);
+
+        if (matcher.matches()) {
+            // Extract data and populate the map
+            parsedData.put("client_ip", matcher.group(1));
+            parsedData.put("date", matcher.group(2));
+            parsedData.put("http_method", matcher.group(3));
+            parsedData.put("path", matcher.group(4));
+            parsedData.put("http_version", matcher.group(5));
+            parsedData.put("status", matcher.group(6));
+            parsedData.put("response_bytes", matcher.group(7));
+            parsedData.put("user_agent", matcher.group(8));
+        } else {
+            throw new IllegalArgumentException("Invalid log format");
+        }
+
         return parsedData;
     }
+
+
 
     public static void main(String[] args) {
         String logEntry = "122.176.223.47 - - [05/Feb/2024:08:29:40 +0000] " +

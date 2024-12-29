@@ -11,7 +11,20 @@ public class StockTrader {
      * @return the maximum profit, or 0 if no profit can be achieved
      */
     public static int maxProfit(int[] prices) {
-        return 0;
+        int i,maxProfit=0,lowBuy=prices[0];
+        for(i=1;i<prices.length;i++)
+        {
+            if(prices[i]-lowBuy >maxProfit)
+            {
+                maxProfit=prices[i]-lowBuy;
+            }
+            if(prices[i]<lowBuy)
+            {
+                lowBuy=prices[i];
+            }
+
+        }
+        return maxProfit;
     }
 
     public static void main(String[] args) {
