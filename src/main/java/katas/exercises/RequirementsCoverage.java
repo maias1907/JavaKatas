@@ -5,75 +5,54 @@ import java.util.*;
 public class RequirementsCoverage {
 
     /**
-     * In software testing, it's often required to select a minimal set of test cases that cover all the requirements.
-     * You are given a set of test cases and their associated covered requirements.
-     * Your task is to select the minimal subset of test cases such that all requirements are covered.
-     * <p>
-     * For example, you have the following test cases and requirements they cover:
-     * <p>
-     * testCases = [
-     * [1, 2, 3],   // Test case 0 covers requirements 1, 2, 3
-     * [1, 4],      // Test case 1 covers requirements 1, 4
-     * [2, 3, 4],   // Test case 2 covers requirements 2, 3, 4
-     * [1, 5],      // Test case 3 covers requirements 1, 5
-     * [3, 5]       // Test case 4 covers requirements 3, 5
-     * ]
+     * Selects the minimal set of test cases that cover all requirements.
      *
      * @param testCases a list of test cases, where each test case is a list of requirements it covers
-     * @return a list of indices of the minimal subset of test cases that covers all requirements
+     * @return a list of indices of the minimal subset of test cases that covers all requirements, or an empty list if not possible
      */
-    public static List<Integer> selectMinimalTestCases(List<List<Integer>> testCases){
-        // Collect all unique requirements
+    public static List<Integer> selectMinimalTestCases(List<List<Integer>> testCases) {
+        int n = testCases.size();
         Set<Integer> allRequirements = new HashSet<>();
+
+        // Step 1: Identify all requirements
         for (List<Integer> testCase : testCases) {
             allRequirements.addAll(testCase);
         }
 
-        // To track the remaining uncovered requirements
-        Set<Integer> uncoveredRequirements = new HashSet<>(allRequirements);
-        // To store indices of selected test cases
-        List<Integer> selectedTests = new ArrayList<>();
-
-        // Create a map for easier lookup of test cases
-        Map<Integer, Set<Integer>> testCaseMap = new HashMap<>();
-        for (int i = 0; i < testCases.size(); i++) {
-            testCaseMap.put(i, new HashSet<>(testCases.get(i)));
+        // Step 2: Check if all requirements can be covered
+        Set<Integer> combinedRequirements = new HashSet<>();
+        for (List<Integer> testCase : testCases) {
+            combinedRequirements.addAll(testCase);
+        }
+        if (!combinedRequirements.containsAll(allRequirements)) {
+            return new ArrayList<>(); // No subset can cover all requirements
         }
 
-        // Greedy selection of test cases
-        while (!uncoveredRequirements.isEmpty()) {
-            int bestTestCase = -1;
-            int maxCoverage = 0;
+        // Step 3: Generate all possible subsets using bit masking
+        int minSize = Integer.MAX_VALUE;
+        List<Integer> bestSubset = new ArrayList<>();
 
-            // Find the test case that covers the most uncovered requirements
-            for (Map.Entry<Integer, Set<Integer>> entry : testCaseMap.entrySet()) {
-                int testCaseIndex = entry.getKey();
-                Set<Integer> requirements = entry.getValue();
+        for (int mask = 1; mask < (1 << n); mask++) {
+            Set<Integer> coveredRequirements = new HashSet<>();
+            List<Integer> currentSubset = new ArrayList<>();
 
-                // Calculate the intersection of uncovered requirements
-                Set<Integer> uncovered = new HashSet<>(requirements);
-                uncovered.retainAll(uncoveredRequirements);
-
-                if (uncovered.size() > maxCoverage) {
-                    maxCoverage = uncovered.size();
-                    bestTestCase = testCaseIndex;
+            // Add test cases to the current subset based on the bit mask
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) != 0) {
+                    currentSubset.add(i);
+                    coveredRequirements.addAll(testCases.get(i));
                 }
             }
 
-            // Add the best test case to the result
-            if (bestTestCase != -1) {
-                selectedTests.add(bestTestCase);
-                uncoveredRequirements.removeAll(testCaseMap.get(bestTestCase));
-                testCaseMap.remove(bestTestCase); // Remove from consideration
-            } else {
-                throw new IllegalStateException("Not all requirements can be covered with the provided test cases.");
+            // Step 4: Check if the current subset covers all requirements
+            if (coveredRequirements.containsAll(allRequirements) && currentSubset.size() < minSize) {
+                minSize = currentSubset.size();
+                bestSubset = new ArrayList<>(currentSubset);
             }
         }
 
-        return selectedTests;
-
+        return bestSubset;
     }
-
 
     public static void main(String[] args) {
         List<List<Integer>> testCases = List.of(
@@ -88,4 +67,3 @@ public class RequirementsCoverage {
         System.out.println(result); // Expected output: [2, 3]
     }
 }
-
