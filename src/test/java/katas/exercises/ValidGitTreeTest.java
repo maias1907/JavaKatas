@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class isValidGitTreeTest {
+public class ValidGitTreeTest {
     @Test
     public void testValidGitTreeCases() {
         // Test case 1: Valid tree

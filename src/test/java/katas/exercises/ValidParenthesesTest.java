@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class isValidParenthesesTest {
+public class ValidParenthesesTest {
     @Test
     public void testIsValidParentheses(){
         assertEquals(true, ValidParentheses.isValidParentheses("()"), "Should return true for simple valid parentheses");
