@@ -3,8 +3,9 @@ package katas.exercises;
 
 import java.util.List;
 
+
 public class RoundRobinLoadBalancer {
-    /**
+  /*  /**
      * In distributed systems, a load balancer is responsible for distributing incoming requests to multiple server instances.
      * A round-robin load balancer assigns requests to server instances in a circular order.
      *
@@ -14,14 +15,14 @@ public class RoundRobinLoadBalancer {
      *  - Removes a server instance from the pool of available instances.
      *  - Routes incoming requests to server instances in a round-robin manner.
      *  - Return null when no servers are available.
-     */
+
 
     private  List<IP> servers;
     private int currentIndex;
 
     /**
      * Constructor to initialize the load balancer.
-     */
+
     public RoundRobinLoadBalancer() {
 
     }
@@ -30,7 +31,7 @@ public class RoundRobinLoadBalancer {
      * Adds a server instance to the load balancer.
      *
      * @param server the IP object representing the server to add
-     */
+
     public void addServer(IP server) {
 
     }
@@ -39,7 +40,7 @@ public class RoundRobinLoadBalancer {
      * Removes a server instance from the load balancer.
      *
      * @param server the IP object representing the server to remove
-     */
+
     public void removeServer(IP server) {
 
     }
@@ -48,7 +49,7 @@ public class RoundRobinLoadBalancer {
      * Routes a request to the next server in round-robin order.
      *
      * @return the IP object of the server handling the request
-     */
+
     public IP routeRequest() {
 
     }
@@ -73,7 +74,7 @@ public class RoundRobinLoadBalancer {
 
     /**
      * Represents an IP address.
-     */
+
     class IP {
         private final String address;
 
@@ -81,7 +82,7 @@ public class RoundRobinLoadBalancer {
          * Constructor to initialize an IP address.
          *
          * @param address the IP address as a string
-         */
+
         public IP(String address) {
             if (!isValidIP(address)) {
                 throw new IllegalArgumentException("Invalid IP address: " + address);
@@ -93,7 +94,7 @@ public class RoundRobinLoadBalancer {
          *
          * @param address the IP address to validate
          * @return true if the address is valid, false otherwise
-         */
+
         private static boolean isValidIP(String address) {
 
         }
@@ -115,7 +116,7 @@ public class RoundRobinLoadBalancer {
         public int hashCode() {
 
         }
-    }
+    }*/
 
 }
 

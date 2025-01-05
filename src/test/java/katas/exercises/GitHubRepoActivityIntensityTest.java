@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 public class GitHubRepoActivityIntensityTest {
 
-    @Test
+ /*   @Test
     void testCalculateAverageTimeBetweenCommits() throws Exception {
         List<Instant> mockTimestamps = List.of(
                 Instant.parse("2023-12-01T12:00:00Z"),
@@ -31,5 +31,5 @@ public class GitHubRepoActivityIntensityTest {
         when(mockConnection.getResponseCode()).thenReturn(200);
 
         // continue....
-    }
+    }*/
 }
