@@ -31,31 +31,51 @@ public class QueueWithFailover {
     }
 
     public boolean isEmpty() {
-        /**
+        /**V
          * Check if the job queue is empty.
          *
          * @return boolean: True if the job queue is empty, False otherwise.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+       if(this.jobs.size()==0)
+       {
+           return true;
+       }
+       return false;
     }
 
     public void sendJob(String job) {
-        /**
+        /**V
          * Send a job to the job queue.
          *
          * @param job The job to be added to the queue.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if(this.jobs.size()<this.jobTimeout)
+        {
+            this.jobs.add(job);
+        }
+        else{
+            System.out.println("the Queue is full");
+        }
+
+
     }
 
     public String getJob() throws EmptyQueueException {
-        /**
+        /**V
          * Retrieve and return a job from the front of the job queue.
          *
          * @return String: The job at the front of the queue.
          * @throws EmptyQueueException: If the job queue is empty.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if(isEmpty()){
+            throw new EmptyQueueException("there is no jobs");
+        }
+       else{
+           String frontJob=this.jobs.poll();
+            this.hiddenJobs.put(frontJob,System.currentTimeMillis());
+            return frontJob;
+        }
+
     }
 
     public void jobDone(String job) {
@@ -66,32 +86,49 @@ public class QueueWithFailover {
          * @param job The job to be deleted permanently from the queue.
          * @throws IllegalArgumentException: If the job is not found in the hidden jobs.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+        if (this.hiddenJobs.containsKey(job)) {
+            hiddenJobs.remove(job);
+        } else {
+            throw new IllegalArgumentException("job is not found in the hidden jobs");
+        }
     }
 
     public int size() {
-        /**
+        /**V
          * Return the number of jobs in the job queue.
          *
          * @return int: The number of jobs in the queue.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+        return this.jobs.size();
     }
 
     public int inFlightSize() {
-        /**
+        /**V
          * Return the number of hidden jobs.
          *
          * @return int: The number of hidden jobs in the queue.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+       return this.hiddenJobs.size();
     }
 
     public void returnExpiredJobsToQueue() {
-        /**
+        /**V
+         *
          * Return hidden jobs that were retrieved more than `jobTimeout` seconds ago back to the job queue.
          */
-        throw new UnsupportedOperationException("Not implemented yet.");
+       long  currentTime=System.currentTimeMillis();
+        List<String> expiredJobs=new ArrayList<>();
+        for (Map.Entry<String, Long> entry : hiddenJobs.entrySet()) {
+            long jobStartTime = entry.getValue();
+            if (currentTime - jobStartTime > jobTimeout * 1000) {
+                expiredJobs.add(entry.getKey());
+            }
+        }
+        for(String job:expiredJobs)
+        {
+            hiddenJobs.remove(job);
+            this.sendJob(job);
+        }
     }
 
     public static void main(String[] args) {
