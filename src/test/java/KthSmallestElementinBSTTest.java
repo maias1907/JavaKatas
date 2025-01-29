@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static katas.exercises.KthSmallestElementInBST.kthSmallest;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class KthSmallestElementInBSTTest {
+public class KthSmallestElementinBSTTest {
 
     @Test
     public void testKthSmallestBalancedTree() {
