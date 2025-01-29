@@ -1,5 +1,8 @@
 package katas.exercises;
 
+import java.util.Collections;
+import java.util.PriorityQueue;
+
 /**
  * find the median of a stream of integers.
  *
@@ -15,9 +18,16 @@ public class MedianFinder {
 
     /**
      * Initializes the MedianFinder object.
+     *
      */
-    public MedianFinder() {
+      // Min-Heap (Default)
+    private PriorityQueue<Double> minHeap ;
 
+    // Max-Heap (Using reverse order)
+     private   PriorityQueue<Double> maxHeap ;
+    public MedianFinder() {
+        minHeap = new PriorityQueue<>();
+        maxHeap = new PriorityQueue<>(Collections.reverseOrder());
     }
 
     /**
@@ -26,6 +36,36 @@ public class MedianFinder {
      * @param num the number to be added
      */
     public void addNum(int num) {
+        // Always push the new number to the maxHeap (left half of the data)
+        double num1=(double) num;
+        //maxHeap.add(num1);
+        if(maxHeap.size()==0 || num1<maxHeap.peek() )
+        {
+
+            maxHeap.add(num1);
+        }
+
+
+
+          else if(maxHeap.size()!=0 &&num1>maxHeap.peek())
+           {
+
+
+               minHeap.add(num1);
+           }
+
+        // Move the largest element from maxHeap to minHeap
+        if (maxHeap.size() > minHeap.size() + 1) {
+
+
+            minHeap.add(maxHeap.poll());
+        }
+
+        // Balance the heaps: if minHeap has more elements, move the root to maxHeap
+      else   if (minHeap.size() > maxHeap.size()) {
+
+            maxHeap.add(minHeap.poll());
+        }
 
     }
 
@@ -36,7 +76,20 @@ public class MedianFinder {
      */
     public double findMedian() {
 
-        return 0.0;
+
+
+
+        if(maxHeap.size()!=0 && minHeap.size()!=0  && maxHeap.size()==minHeap.size())
+        {
+
+            double mid= (maxHeap.peek()+minHeap.peek())/2;
+
+
+            return mid;
+        }
+
+
+        return maxHeap.peek();
     }
 
     public static void main(String[] args) {
@@ -51,5 +104,6 @@ public class MedianFinder {
 
         medianFinder.addNum(5);
         System.out.println("Median: " + medianFinder.findMedian());
+
     }
 }
