@@ -1,4 +1,4 @@
-import katas.exercises.KthSmallestElementInBST;
+package katas.exercises;
 
 
 import org.junit.jupiter.api.Test;
