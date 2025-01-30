@@ -5,6 +5,8 @@ import katas.exercises.wallet.Stock;
 import katas.exercises.wallet.Utils.*;
 import java.util.List;
 
+import static katas.exercises.wallet.Utils.StockType.*;
+
 
 /**
  * Represents a wallet containing stocks, where each stock has a quantity and type.
@@ -21,6 +23,7 @@ public class Wallet {
     private final List<Stock> stocks;
 
     public Wallet(List<Stock> stocks) {
+
         this.stocks = stocks;
     }
 
@@ -32,7 +35,14 @@ public class Wallet {
      * @return the total value of the wallet in the specified currency
      */
     public double value(Currency currency, RateProvider rateProvider) {
-        return 0;
+        double totalVal=0;
+
+        for(Stock s: stocks)
+        {
+            totalVal+=(s.getQuantity()*rateProvider.rate(s.getType(),currency));
+        }
+
+        return totalVal;
     }
 
     public static void main(String[] args) {
@@ -41,16 +51,51 @@ public class Wallet {
         class StaticRateProvider implements RateProvider {
             @Override
             public double rate(StockType from, Currency to) {
-                return 1.0;
+                if(to==Currency.EUR) {
+                    if (from == PETROLEUM) {
+
+                        return 0.149484;
+                    }
+                    else if(from ==BITCOIN)
+                    {
+                        return 101374.43;
+                    }
+                    else if(from==USD)
+                    {
+                        return 0.96;
+                    }
+                    else{
+                        return 1.0;
+                    }
+                }
+                else{
+                    if (from == PETROLEUM) {
+
+                        return 0.155173;
+                    }
+                    else if(from ==BITCOIN)
+                    {
+                        return  105361.10;
+                    }
+                    else if(from==EURO)
+                    {
+                        return (1/0.96);
+                    }
+                    else{
+                        return 1.0;
+                    }
+                }
+
             }
+
         }
 
         RateProvider staticRateProvider = new StaticRateProvider();
 
         Wallet wallet = new Wallet(List.of(
-                new Stock(5, StockType.PETROLEUM),
-                new Stock(2, StockType.BITCOIN),
-                new Stock(100, StockType.USD)
+                new Stock(5, PETROLEUM),
+                new Stock(2, BITCOIN),
+                new Stock(100, USD)
         ));
 
         double walletValue = wallet.value(Currency.EUR, staticRateProvider);
