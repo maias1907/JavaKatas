@@ -52,7 +52,7 @@ import java.time.Period;
  *         Compute the number of years since the registration_date.
  *
  */
-public class ETLTask {
+public class  ETLTask {
 
     /**
      * Performs the ETL operation from source.db to target.db.
